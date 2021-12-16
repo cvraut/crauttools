@@ -1,0 +1,3 @@
+useDynLib(crauttools, .registration=TRUE)
+importFrom(Rcpp, evalCpp)
+exportPattern("^[[:alpha:]]+")
