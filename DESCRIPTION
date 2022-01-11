@@ -1,0 +1,16 @@
+Package: crauttools
+Type: Package
+Title: craut's Tools
+Version: 1.0
+Date: 2021-12-16
+Author: Chinmay Raut
+Maintainer: Chinmay Raut <chinmay0raut@gmail.com>
+Description: A series of tools to help craut use R with other stuff. TODO: 
+  follow this <http://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file>
+License: GPL (>= 2)
+Imports: Rcpp (>= 1.0.7)
+LinkingTo: Rcpp, RcppArmadillo
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+RoxygenNote: 7.1.1
