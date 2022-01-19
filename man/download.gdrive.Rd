@@ -10,6 +10,7 @@ download.gdrive(
   download_url = NULL,
   parent_dir = getwd(),
   content = FALSE,
+  quiet = FALSE,
   ...
 )
 }
@@ -23,6 +24,8 @@ download.gdrive(
 \item{parent_dir}{(default = getwd()) the full path for the parent directory for the file to be downloaded to}
 
 \item{content}{(default = FALSE) flag to determine whether to return the content or the file name}
+
+\item{quiet}{(default = FALSE) flag to display warnings and status of function}
 
 \item{...}{extra parameters that will be passed to utils::download.file}
 }
