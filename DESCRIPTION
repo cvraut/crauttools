@@ -8,7 +8,11 @@ Maintainer: Chinmay Raut <chinmay0raut@gmail.com>
 Description: A series of tools to help craut use R with other stuff. TODO: 
   follow this <http://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file>
 License: GPL (>= 2)
-Imports: Rcpp (>= 1.0.7)
+Imports: 
+    checkmate,
+    Rcpp (>= 1.0.7),
+    readr,
+    stringr
 LinkingTo: Rcpp, RcppArmadillo
 Suggests: 
     testthat (>= 3.0.0)

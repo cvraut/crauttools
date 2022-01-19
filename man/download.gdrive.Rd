@@ -10,6 +10,7 @@ download.gdrive(
   download_url = NULL,
   parent_dir = getwd(),
   content = FALSE,
+  quiet = FALSE,
   ...
 )
 }
@@ -24,13 +25,15 @@ download.gdrive(
 
 \item{content}{(default = FALSE) flag to determine whether to return the content or the file name}
 
+\item{quiet}{(default = FALSE) flag to display warnings and status of function}
+
 \item{...}{extra parameters that will be passed to utils::download.file}
 }
 \value{
 string of the full file path of downloaded file (or content if the content flag is TRUE)
 }
 \description{
-download file from gdrive
+download file from gdrive (NOTE: as of now, the file must be viewable to everyone)
 Look at this site for further details of the issue:
 https://syncwithtech.blogspot.com/p/direct-download-link-generator.html
 }

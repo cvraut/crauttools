@@ -4,5 +4,5 @@ exportPattern("^[[:alpha:]]+")
 
 export(download.gdrive)
 importFrom(checkmate,checkPathForOutput)
-importFrom(stringr,str_match)
 importFrom(readr,read_file)
+importFrom(stringr,str_match)
