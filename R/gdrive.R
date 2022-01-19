@@ -4,7 +4,7 @@
 
 #' download.gdrive
 #' 
-#' download file from gdrive
+#' download file from gdrive (NOTE: as of now, the file must be viewable to everyone)
 #' Look at this site for further details of the issue:
 #' https://syncwithtech.blogspot.com/p/direct-download-link-generator.html
 #' 
@@ -21,6 +21,7 @@
 #' TODO: add nice examples
 #' @importFrom checkmate checkPathForOutput
 #' @importFrom readr read_file
+#' @importFrom stringr str_match
 #' @export
 download.gdrive <- function(f_name = "gdrive.file",
              share_url = NULL,
@@ -44,14 +45,45 @@ download.gdrive <- function(f_name = "gdrive.file",
   }
   
   download_location = file.path(parent_dir,f_name)
-  
-  if(!checkPathForOutput(download_location,overwrite = TRUE)){
-    stop(paste("download location: '",download_location,"' is an invalid file location on this system",sep=""))
-  } else if(is.character(checkPathForOutput(download_location)) && !quiet) {
-    message("overwriting file")
+  path_check = checkPathForOutput(download_location,overwrite = TRUE)
+  if(path_check == TRUE){
+    if(is.character(checkPathForOutput(download_location)) && !quiet){
+      message("overwriting file")
+    }
+  } else {
+    stop(path_check)
   }
   
-  download.file(download_url,download_location,quiet=quiet,...)
+  # wrap the download in a wrapper to capture errors and warnings and deal with them accordingly
+  # addpted from the following SO response
+  # https://stackoverflow.com/questions/4948361/how-do-i-save-warnings-and-errors-as-output-from-a-function
+  err <- list()
+  warn <- list()
+  withCallingHandlers(
+    tryCatch(download.file(download_url,download_location,quiet=quiet,...), error=function(e) {
+      err <<- e
+      NULL
+    }), warning=function(w) {
+      warn <<- w
+      invokeRestart("muffleWarning")
+    })
+  if(length(err)>0){
+    FILE_NOT_FOUND_PATTERN = "^cannot open URL '.+'$"
+    if(!is.na(str_match(err$message,FILE_NOT_FOUND_PATTERN))){
+      stop(paste(err$message,"\nDo you have access?"))
+    } else{
+      stop(err)
+    }
+  } else if(length(warn)>0){
+    FILE_SIZE_MISMATCH_PATTERN = "^downloaded length \\d+ != reported length \\d+$"
+    if(!is.na(str_match(warn$message,FILE_SIZE_MISMATCH_PATTERN))){
+      if (file.exists(download_location)) {
+        file.remove(download_location)
+        stop(paste(warn$message,"\nRemoving downloads... Do you have access?"))
+      }
+    }
+  }
+  
   if(!content){
     return(download_location)
   } else {

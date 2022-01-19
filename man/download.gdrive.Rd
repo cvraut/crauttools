@@ -33,7 +33,7 @@ download.gdrive(
 string of the full file path of downloaded file (or content if the content flag is TRUE)
 }
 \description{
-download file from gdrive
+download file from gdrive (NOTE: as of now, the file must be viewable to everyone)
 Look at this site for further details of the issue:
 https://syncwithtech.blogspot.com/p/direct-download-link-generator.html
 }
